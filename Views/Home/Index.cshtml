@@ -1,0 +1,56 @@
+﻿@{
+    // Get the physical path to the "images" folder
+    var imagesFolder = Server.MapPath("~/images");
+
+    // Get a list of image files in the folder
+    var imageFiles = Directory.GetFiles(imagesFolder, "*.jpg");
+
+    // Define the CSS style for the gallery
+    var galleryStyle = "display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formation Gallery</title>
+    <style>
+        .gallery {
+            @Html.Raw(galleryStyle)
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 400px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        @foreach (var imageFile in imageFiles)
+        {
+            var fileName = Path.GetFileName(imageFile);
+            var imagePath = Url.Content("~/images/" + fileName);
+
+            <a href="@imagePath" data-lightbox="gallery" data-title="@fileName">
+                <img src="@imagePath" alt="@fileName">
+            </a>
+        }
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"
+
+                document.addEventListener("DOMContentLoaded", function () {
+            var images = document.querySelectorAll(".gallery img");
+            images.forEach(function (image) {
+                image.addEventListener("click", function () {
+                    window.location.href = "../Views/Formation/IndexF";
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>

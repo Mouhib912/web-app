@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebApplication2.Models.Formation>
+@{
+    ViewBag.Title = "IndexF";
+}
+
+<h2>Index Formations</h2>
+<hr />
+
+<a href="@Url.Action("Create")" class="btn btn-dark my-2" >
+    Ajouter Formation
+</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>nom</th>
+            <th>img</th>
+            <th>description</th>
+            <th>IS Active</th>
+            <th>Evaluer</th>
+            <th>Modifier </th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var formation in Model)
+            {
+                <tr>
+                    <td>@formation.Id</td>
+                    <td>@formation.Nom</td>
+                    <td>@formation.ImgUrl</td>
+                    <td>@formation.Description</td>
+                    <td>@formation.IsActive</td>
+                    <td>
+                        <a href="@Url.Action("Evaluer","Formations",new {id = formation.Id})" class="btn btn-dark my-2">
+                            <i class="iconfont-ui-edit"></i>
+                            Evaluer
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Edit","Formations",new {id = formation.Id})" class="btn btn-dark my-2">
+                            <i class="iconfont-ui-edit"></i>
+                            Modifier
+                        </a>
+                    </td>
+                    <td>
+                        <a href="javascript:;" class="btn btn-dark my-2">
+                            <i class="iconfont-ui-D"></i>
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">No formations found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
