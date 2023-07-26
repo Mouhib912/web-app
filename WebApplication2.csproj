@@ -221,7 +221,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Formation\IndexF.cshtml" />
-    <Content Include="Views\Formation\Create.cshtml" />
+    <Content Include="Views\Formation\FormationForm.cshtml" />
+    <Content Include="Views\Formation\EditFormation.cshtml" />
+    <Content Include="Views\Formation\Evaluer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

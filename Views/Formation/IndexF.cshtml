@@ -35,20 +35,20 @@
                     <td>@formation.Description</td>
                     <td>@formation.IsActive</td>
                     <td>
-                        <a href="@Url.Action("Evaluer","Formations",new {id = formation.Id})" class="btn btn-dark my-2">
+                        <a href="@Url.Action("Evaluer","Formation",new {id = formation.Id})" class="btn btn-dark my-2">
                             <i class="iconfont-ui-edit"></i>
                             Evaluer
                         </a>
                     </td>
 
                     <td>
-                        <a href="@Url.Action("Edit","Formations",new {id = formation.Id})" class="btn btn-dark my-2">
+                        <a href="@Url.Action("Edit","Formation",new {id = formation.Id})" class="btn btn-dark my-2">
                             <i class="iconfont-ui-edit"></i>
                             Modifier
                         </a>
                     </td>
                     <td>
-                        <a href="javascript:;" class="btn btn-dark my-2">
+                        <a  href="@Url.Action("Delete","Formation",new {id = formation.Id})"  class="btn btn-dark my-2">
                             <i class="iconfont-ui-D"></i>
                             Supprimer
                         </a>
@@ -59,7 +59,7 @@
         else
         {
             <tr>
-                <td colspan="3">No formations found.</td>
+                <td colspan="3">No formations found. </td>
             </tr>
         }
     </tbody>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
@@ -29,30 +30,79 @@ namespace WebApplication2.Controllers
 
         public ActionResult Create()
         {
-            var model = new FormationFormViewModel();
-            return View(model);
+            var ViewModel = new FormationFormViewModel();
+            return View("FormationForm", ViewModel);
         }
 
-        public ActionResult Edit(int? id) {
+
+        public ActionResult Edit(int? id)
+        {
             if (id == null)
             {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var Formation = _context.Formations.Find(id);
-            if (Formation == null) { return HttpNotFound(); }
 
-            var ViewModel = new FormationFormViewModel
+            var formation = _context.Formations.Find(id);
+            if (formation == null)
             {
-                Id = Formation.Id, 
-                Description = Formation.Description,
-                ImgUrl = Formation.ImgUrl,
-                IsActive = Formation.IsActive
-            }; 
-            return View("FormationForm", ViewModel);
+                return HttpNotFound();
+            }
+
+            var viewModel = new FormationFormViewModel
+            {
+                Id = formation.Id,
+                Nom = formation.Nom,
+                Description = formation.Description,
+                IsActive = formation.IsActive
+            };
 
 
 
+            return View("EditFormation", viewModel);
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var formation = _context.Formations.Find(id);
+            if (formation == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Assuming you have a method to remove the formation from the database.
+            // For example, if you are using Entity Framework, you might have something like:
+            // _context.Formations.Remove(formation);
+
+            // Replace the above line with the actual code to delete the record from your data store.
+            // For the sake of this example, let's assume the record is deleted successfully.
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that might occur during the delete operation.
+                // You might want to log the error or show an error message to the user.
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+
+            // Redirect to the index or any other appropriate page after successful deletion.
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Evaluer(int? id)
+        {
+            var ViewModel = new FormationFormViewModel();
+            return View("Evaluer");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -60,7 +110,7 @@ namespace WebApplication2.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", model);
+                return View("FormationForm", model);
             }
 
             var formation = new Formation

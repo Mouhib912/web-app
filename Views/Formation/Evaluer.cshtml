@@ -1,0 +1,65 @@
+﻿@model WebApplication2.ViewModels.FormationFormViewModel
+@{
+    ViewBag.Title = "Evaluer";
+}
+
+<h2>Ajouter Evaluation</h2>
+<hr />
+{
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.Id) <!-- Added a hidden field for the 'Id' property -->
+
+<br />
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Survey</title>
+</head>
+<body>
+    <h1>Evaluation du Formation </h1>
+    <p> Veuillez choisir l'un des emojis pour chaque question.</p>
+    <ol>
+        <li>
+            <p>How do you feel today?</p>
+            <ul>
+                <li><emoji>😀</emoji> Happy</li>
+                <li><emoji>😊</emoji> Content</li>
+                <li><emoji>😐</emoji> Neutral</li>
+                <li><emoji>😔</emoji> Sad</li>
+            </ul>
+        </li>
+        <li>
+            <p>What is your favorite color?</p>
+            <ul>
+                <li><emoji>😀</emoji> Happy</li>
+                <li><emoji>😊</emoji> Content</li>
+                <li><emoji>😐</emoji> Neutral</li>
+                <li><emoji>😔</emoji> Sad</li>
+            </ul>
+        </li>
+        <li>
+            <p>What is your favorite animal?</p>
+            <ul>
+                <li><emoji>😀</emoji> Happy</li>
+                <li><emoji>😊</emoji> Content</li>
+                <li><emoji>😐</emoji> Neutral</li>
+                <li><emoji>😔</emoji> Sad</li>
+            </ul>
+        </li>
+    </ol>
+    <p>Merci pour l'evalutation !</p>
+</body>
+</html>
+<br />
+<button type="submit" class="btn btn-dark">Save</button>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -8,6 +8,8 @@
 @using (Html.BeginForm("Save", "Formation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id) <!-- Added a hidden field for the 'Id' property -->
+
     <div class="form-group">
         @Html.LabelFor(m => m.Nom)
         @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
