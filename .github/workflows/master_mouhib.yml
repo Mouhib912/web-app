@@ -25,10 +25,10 @@ jobs:
           node-version: '16.x'
 
       - name: Build with dotnet
-        run: dotnet build WebApplication2 --configuration Release
+        run: dotnet build WebApplication2.csproj  --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish WebApplication2 -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish WebApplication2.csproj  -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
