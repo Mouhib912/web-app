@@ -20,15 +20,12 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
 
       - name: Restore dependencies
-        run: dotnet restore WebApplication2.csproj
+        run: nuget restore WebApplication2.csproj
 
       - name: Build and publish
         run: |
-          dotnet build WebApplication2.csproj --configuration Release
-          dotnet publish WebApplication2.csproj --configuration Release --output ./published
-
-      - name: List files in published directory
-        run: dir ./published
+          msbuild WebApplication2.csproj /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="./published/"
+          dir ./published
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
