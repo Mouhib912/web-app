@@ -20,18 +20,19 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
 
       - name: Restore NuGet packages
-        run: nuget restore
+        run: nuget restore WebApplication2.csproj
 
-      - name: Publish to temporary folder
-        run: |
-          mkdir published
-          msbuild /nologo /verbosity:m /t:Publish /p:Configuration=Release /p:PublishUrl=published/
+      - name: Publish project
+        run: msbuild WebApplication2.csproj /t:Publish /p:Configuration=Release /p:OutputPath=./published
+
+      - name: List files in published directory
+        run: dir ./published
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: ASP-app
-          path: './published/**'
+          path: ./published/*
 
   deploy:
     runs-on: windows-latest
