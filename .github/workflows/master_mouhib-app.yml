@@ -23,8 +23,8 @@ jobs:
         run: nuget restore WebApplication2.sln
 
       - name: Build and publish
-        run: |
-          dotnet build WebApplication2.csproj --configuration Release
+        run:
+          msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
           dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
       - name: List files in published directory
