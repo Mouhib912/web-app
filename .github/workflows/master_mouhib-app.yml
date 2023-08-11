@@ -19,11 +19,13 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Restore NuGet packages
-        run: nuget restore WebApplication2.csproj
+      - name: Restore dependencies
+        run: dotnet restore WebApplication2.csproj
 
-      - name: Publish project
-        run: msbuild WebApplication2.csproj /t:Publish /p:Configuration=Release /p:OutputPath=./published
+      - name: Build and publish
+        run: |
+          dotnet build WebApplication2.csproj --configuration Release
+          dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
       - name: List files in published directory
         run: dir ./published
