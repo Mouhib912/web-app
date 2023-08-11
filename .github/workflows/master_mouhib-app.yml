@@ -16,11 +16,16 @@ jobs:
       - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Restore NuGet packages
-        run: msbuild -t:restore
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Publish /p:PublishDir=./published/
+      - name: Restore NuGet packages
+        run: nuget restore
+
+      - name: Publish to temporary folder
+        run: |
+          mkdir published
+          msbuild /nologo /verbosity:m /t:Publish /p:Configuration=Release /p:PublishUrl=published/
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -48,4 +53,4 @@ jobs:
           app-name: 'mouhib-app'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898C1390A5E340D8AA87C6C20E341BAB }}
-          package: ./ASP-app/
+          package: .
