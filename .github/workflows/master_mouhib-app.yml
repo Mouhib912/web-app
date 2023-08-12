@@ -11,31 +11,31 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Setup MSBuild path
-        uses: microsoft/setup-msbuild@v1.0.2
+    - name: Setup MSBuild path
+      uses: microsoft/setup-msbuild@v1.0.2
 
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
 
-      - name: Restore dependencies using nuget
-        run: nuget restore WebApplication2.sln
+    - name: Restore dependencies using nuget
+      run: nuget restore WebApplication2.sln
 
-      - name: Build with MSBuild
-        run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
-  
-      - name: Publish with dotnet
-        run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
+    - name: Build with MSBuild
+      run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
 
-      - name: List files in published directory
-        run: dir ./published
+    - name: Publish with dotnet
+      run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: ASP-app
-          path: ./published/*
+    - name: List files in published directory
+      run: dir ./published
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: ASP-app
+        path: ./published/*
 
   deploy:
     runs-on: windows-latest
@@ -45,16 +45,16 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: ASP-app
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v2
+      with:
+        name: ASP-app
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'mouhib-app'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898C1390A5E340D8AA87C6C20E341BAB }}
-          package: .
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'mouhib-app'
+        slot-name: 'Production'
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898C1390A5E340D8AA87C6C20E341BAB }}
+        package: .
