@@ -27,7 +27,8 @@ jobs:
 
     - name: Build with MSBuild
       run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
-
+    - name: Ensure published directory exists
+      run: mkdir -p ./published
     - name: Publish with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
