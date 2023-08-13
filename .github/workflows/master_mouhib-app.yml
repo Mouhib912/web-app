@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
     - uses: actions/checkout@v2
@@ -25,40 +28,17 @@ jobs:
     - name: Build with MSBuild
       run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
 
-    - name: Ensure published directory exists
-      run: mkdir -p ./published
-
     - name: Publish with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
-
 
     - name: List files in published directory
       run: dir ./published
 
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v2
-      with:
-        name: ASP-app
-        path: ./published/*
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: ASP-app
-
+    # Now, we will deploy directly after publishing.
     - name: Deploy to Azure Web App
-      id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'mouhib-app'
         slot-name: 'Production'
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898C1390A5E340D8AA87C6C20E341BAB }}
-        package: .
+        package: ./published
