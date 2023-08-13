@@ -1,4 +1,4 @@
-name: Build and deploy ASP app to Azure Web App - mouhib-app
+name: Building and deploying ASP app to Azure Web App - mouhib-app
 
 on:
   push:
