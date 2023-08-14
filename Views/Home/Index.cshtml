@@ -1,4 +1,6 @@
-﻿@{
+﻿@using System.IO
+
+@{
     // Get the physical path to the "images" folder
     var imagesFolder = Server.MapPath("~/images");
 
@@ -13,6 +15,7 @@
 <html>
 <head>
     <title>Formation Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <style>
         .gallery {
             @Html.Raw(galleryStyle)
@@ -33,24 +36,23 @@
             var fileName = Path.GetFileName(imageFile);
             var imagePath = Url.Content("~/images/" + fileName);
 
-            <a href="@imagePath" data-lightbox="gallery" data-title="@fileName">
-                <img src="@imagePath" alt="@fileName">
-            </a>
+        <a href="@imagePath" data-lightbox="gallery" data-title="@fileName">
+            <img src="@imagePath" alt="@fileName">
+        </a>
         }
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"
-
-                document.addEventListener("DOMContentLoaded", function () {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
             var images = document.querySelectorAll(".gallery img");
             images.forEach(function (image) {
                 image.addEventListener("click", function () {
-                    window.location.href = "../Views/Formation/IndexF";
+                    window.location.href = '@Url.Action("IndexF", "Formation")';
                 });
             });
         });
     </script>
-
 
 </body>
 </html>
