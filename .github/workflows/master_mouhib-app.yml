@@ -29,6 +29,17 @@ jobs:
       run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
     - name: Ensure published directory exists
       run: mkdir -p ./published
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'your-app-name'
+        package: 'path-to-your-package'
+
     - name: Publish with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
