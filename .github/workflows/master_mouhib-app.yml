@@ -26,11 +26,17 @@ jobs:
     - name: Restore dependencies using NuGet
       run: nuget restore WebApplication2.sln
 
+    - name: Build application with dotnet
+      run: dotnet build WebApplication2.csproj --configuration Release
+
     - name: Publish application with dotnet
-      run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
+      run: dotnet publish WebApplication2.csproj --configuration Release --output published
 
     - name: List files in the entire workspace (for debugging)
       run: dir 
+
+    - name: Display the content of the published directory
+      run: dir published
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
