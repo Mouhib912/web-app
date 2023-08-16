@@ -12,8 +12,10 @@ jobs:
     environment:
       name: 'Production'
       url: 'https://mouhib-app.azurewebsites.net'
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Setup MSBuild path
       uses: microsoft/setup-msbuild@v1.0.2
@@ -21,12 +23,13 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.5
 
-    - name: Restore dependencies using nuget
+    - name: Restore dependencies using NuGet
       run: nuget restore WebApplication2.sln
 
-    - name: Publish with dotnet
+    - name: Publish application with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
+ 
     - name: List files in published directory
       run: dir ./published
 
