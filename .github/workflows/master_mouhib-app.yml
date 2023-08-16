@@ -32,8 +32,8 @@ jobs:
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'your-app-name'
-        package: 'path-to-your-package'
+        app-name: 'mouhib-app-name'
+        package: 'D:\home\site\wwwroot'
 
     - name: Publish with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
