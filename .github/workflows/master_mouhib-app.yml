@@ -11,8 +11,7 @@ jobs:
     runs-on: windows-latest
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
+      url: 'https://mouhib-app.azurewebsites.net'
     steps:
     - uses: actions/checkout@v2
 
@@ -25,23 +24,12 @@ jobs:
     - name: Restore dependencies using nuget
       run: nuget restore WebApplication2.sln
 
-    - name: Build with MSBuild
-      run: msbuild WebApplication2.csproj /p:Configuration=Release /t:Rebuild
-    - name: Ensure published directory exists
-      run: mkdir -p ./published
-    - name: Deploy to Azure
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'mouhib-app'
-        package: 'D:\home\site\wwwroot'
-
     - name: Publish with dotnet
       run: dotnet publish WebApplication2.csproj --configuration Release --output ./published
 
     - name: List files in published directory
       run: dir ./published
 
-    # Now, we will deploy directly after publishing.
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
