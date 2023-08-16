@@ -32,7 +32,7 @@ jobs:
     - name: Login to Azure
       uses: azure/login@v1
       with:
-       creds: ${{ secrets.AZURE_CREDENTIALS }}
+       creds: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_898C1390A5E340D8AA87C6C20E341BAB }}
 
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v2
